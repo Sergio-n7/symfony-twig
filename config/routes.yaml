@@ -1,0 +1,24 @@
+controllers:
+  resource: ../src/Controller/
+  type: annotation
+
+kernel:
+  resource: ../src/Kernel.php
+  type: annotation
+
+index:
+  path: /inicio
+  controller: App\Controller\HomeController::index
+
+animales:
+  path: /animales/{nombre?}/{apellidos?}
+  controller: App\Controller\HomeController::animales
+  defaults: { nombre: "Samurai", apellidos: "Salguero Girón" }
+  methods: [GET]
+  requirements:
+    nombre: "[a-zA-Z ]+"
+    apellidos: "[0-9a-zA-Z ]+"
+
+redirigir:
+  path: /redirigir
+  controller: App\Controller\HomeController::redirigir

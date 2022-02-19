@@ -1,0 +1,96 @@
+{% extends 'layouts/master.html.twig' %}
+
+{% block titulo %} Animales {% endblock %}
+
+{% block cabecera %}
+{{parent()}} <!-- esto es para heredar el contenido que ya tienes en el layout -->
+<h2>{{title}}</h2>
+{% endblock %}
+
+{% block contenido %}
+{#
+<h1>
+    {{ title }}
+</h1>
+<h2>
+    Tu nombre es: {{ nombre }}
+</h2>
+<h3>
+    Tus apellidos son:  {{ apellidos }}
+</h3>
+#}
+
+{# Crear variables en la vista, tambien se pueden crear en el controller #}
+
+{% set perro = 'Pastor Alemán' %}
+<h4>{{perro}}</h4>
+
+{# Trabajar con Arrays :
+- si hacemos un dump vemos en pantalla la array entera y formateada
+- Si llamamos la array y le damos el índize , nos lo imprime
+#}
+
+{{dump(animales)}}
+{{animales[1]}}
+
+{# Trabajar con Arrays asociativo :
+- si hacemos un dump vemos en pantalla la array entera y formateada
+- para concadenar usamos la virguilla ~~
+- tenemos que llamar la array y el atributo que queremos mostrar
+#}
+{{dump(aves)}}
+{{aves.tipo ~ ' - ' ~ aves.raza}}
+
+{# Condicionales
+- abrir if y cerrarlo #}
+{% if aves.tipo == 'loro' %}
+<h1>Cuidado un palomo volador</h1>
+{% else %}
+<h2>No hay palomos a la vista</h2>
+{% endif %}
+
+{# Bucles :
+- el símbolo | significa como si fuera un punto de JS
+ #}
+{% if animales|length >=0 %}
+    <ul>
+        {% for animal in animales %}
+        <li style="list-style:none">
+            {{animal}}
+        </li>
+            
+        {% endfor %}
+    </ul>
+{% endif %}
+{% for i in 0..10 %} {# el operador .. significa de un número a otro #}
+    {{i}}
+{% endfor %}
+
+{% if aves.color starts with 'g' %} {# comprueba si empieza con algo #}
+    <h1>Empieza por g</h1>
+{% endif %}
+
+{% if aves.color ends with 's' %} {# comprueba si termina con algo #}
+    <h1>acaba por s</h1>
+{% endif %}
+
+<hr>
+<h1>Funciones</h1>
+
+{# Funciones Predefinidas;
+- mirar documentación para saber todas las que hay https://twig.symfony.com/doc/3.x/
+ #}
+
+{{min([6,11,6,99,2])}} {# te saca el numero más pequeño #}
+<br>
+{{random(animales)}} {# Te saca un elemento del array aleatorio #}
+<br>
+{% for i in range(0,10) %} {# Te muestra los números que hay en el rango #}
+    {{i}} <br>
+{% endfor %}
+{% for i in range(0,20,5) %} {# el tercer parámetro es para decirle el salto entre número y número #}
+    {{i}}
+{% endfor %}
+
+
+{% endblock %}
